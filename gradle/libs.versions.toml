@@ -1,0 +1,11 @@
+[versions]
+spring = "2.0.3.RELEASE"
+nacos = "0.2.1"
+skywalking="8.5.0"
+
+[libraries]
+spring-boot = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring"}
+nacos-config = { module = "com.alibaba.boot:nacos-config-spring-boot-starter", version.ref = "nacos"}
+skywalking-toolkit = { module = "org.apache.skywalking:apm-toolkit-logback-1.x", version.ref = "skywalking"}
+skywalking-trace = { module = "org.apache.skywalking:apm-toolkit-trace", version.ref = "skywalking"}
+

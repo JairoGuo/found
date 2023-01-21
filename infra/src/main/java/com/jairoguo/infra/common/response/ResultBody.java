@@ -84,4 +84,24 @@ public class ResultBody<T> implements Serializable {
       return new ResultBody<>(this);
     }
   }
+
+  public String getCode() {
+    return code;
+  }
+
+  public String getMsg() {
+    return msg;
+  }
+
+  public boolean isSuccess() {
+    return success;
+  }
+
+  public T getData() {
+    return data;
+  }
+
+  public Object getInfo() {
+    return info;
+  }
 }
