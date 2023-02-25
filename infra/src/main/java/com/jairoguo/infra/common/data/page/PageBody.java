@@ -1,4 +1,4 @@
-package com.jairoguo.infra.common.response;
+package com.jairoguo.infra.common.data.page;
 
 import com.jairoguo.infra.util.ConvertUtil;
 
@@ -9,16 +9,16 @@ import java.util.function.Function;
 /**
  * @author jairoguo
  */
-public class PageResultBody<T> implements Serializable {
+public class PageBody<T> implements Serializable {
 
   private final Long total;
-  private final Integer totalPage;
+  private final Long totalPage;
 
   private final Integer currentPage;
   private final Integer pageSize;
   private final List<T> data;
 
-  public PageResultBody(Builder<T> builder) {
+  public PageBody(Builder<T> builder) {
     this.total = builder.getTotal();
     this.totalPage = builder.getTotalPage();
     this.currentPage = builder.getCurrentPage();
@@ -26,8 +26,8 @@ public class PageResultBody<T> implements Serializable {
     this.data = builder.getData();
   }
 
-  public PageResultBody(
-      Long total, Integer totalPage, Integer currentPage, Integer pageSize, List<T> data) {
+  public PageBody(
+      Long total, Long totalPage, Integer currentPage, Integer pageSize, List<T> data) {
     this.total = total;
     this.totalPage = totalPage;
     this.currentPage = currentPage;
@@ -42,7 +42,7 @@ public class PageResultBody<T> implements Serializable {
   static class Builder<R> {
     private Long total;
 
-    private Integer totalPage;
+    private Long totalPage;
     private Integer currentPage;
     private Integer pageSize;
     private List<R> data;
@@ -59,7 +59,7 @@ public class PageResultBody<T> implements Serializable {
       return this;
     }
 
-    public Builder<R> totalPage(Integer totalPage) {
+    public Builder<R> totalPage(Long totalPage) {
       this.totalPage = totalPage;
       return this;
     }
@@ -79,15 +79,15 @@ public class PageResultBody<T> implements Serializable {
       return this;
     }
 
-    public PageResultBody<R> build() {
-      return new PageResultBody<>(this);
+    public PageBody<R> build() {
+      return new PageBody<>(this);
     }
 
     public Long getTotal() {
       return total;
     }
 
-    public Integer getTotalPage() {
+    public Long getTotalPage() {
       return totalPage;
     }
 
@@ -104,13 +104,13 @@ public class PageResultBody<T> implements Serializable {
     }
   }
 
-  public <R> PageResultBody<R> convert(List<R> data) {
+  public <R> PageBody<R> convert(List<R> data) {
 
-    return new PageResultBody<>(total, totalPage, currentPage, pageSize, data);
+    return new PageBody<>(total, totalPage, currentPage, pageSize, data);
   }
 
-  public <R> PageResultBody<R> convert(Function<T, R> mapper) {
-    return new PageResultBody<>(
+  public <R> PageBody<R> convert(Function<T, R> mapper) {
+    return new PageBody<>(
         total, totalPage, currentPage, pageSize, ConvertUtil.list(this.data, mapper));
   }
 }

@@ -1,6 +1,6 @@
 package com.jairoguo.infra.common.data.page;
 
-import com.jairoguo.infra.common.data.sort.Sort;
+import com.jairoguo.infra.common.data.sort.SortParam;
 import com.jairoguo.infra.common.data.sort.SortBody;
 import com.jairoguo.infra.common.data.sort.SortRequest;
 
@@ -27,11 +27,11 @@ public class PageRequest {
    *
    * @param currentPage 当前页
    * @param pageSize 页数
-   * @param sort 通用排序对象
+   * @param sortParam 通用排序对象
    * @return IPage
    */
-  public static PageParam of(Integer currentPage, Integer pageSize, Sort sort) {
-    return new PageParamBody(currentPage, pageSize, sort);
+  public static PageParam of(Integer currentPage, Integer pageSize, SortParam sortParam) {
+    return new PageParamBody(currentPage, pageSize, sortParam);
   }
 
   /**

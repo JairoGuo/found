@@ -1,7 +1,7 @@
 package com.jairoguo.infra.common.data.page;
 
 import com.jairoguo.infra.common.data.sort.Order;
-import com.jairoguo.infra.common.data.sort.Sort;
+import com.jairoguo.infra.common.data.sort.SortParam;
 import com.jairoguo.infra.common.data.sort.SortRequest;
 import com.jairoguo.infra.util.CollectionUtil;
 
@@ -44,7 +44,7 @@ public abstract class BasePageQuery {
     }
   }
 
-  public Sort toSort() {
+  public SortParam toSort() {
     if (CollectionUtil.nonEmpty(orders)) {
       return SortRequest.by(this.orders);
     }

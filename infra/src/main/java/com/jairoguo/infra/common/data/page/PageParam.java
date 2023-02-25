@@ -1,6 +1,6 @@
 package com.jairoguo.infra.common.data.page;
 
-import com.jairoguo.infra.common.data.sort.Sort;
+import com.jairoguo.infra.common.data.sort.SortParam;
 
 /**
  * 通用分页接口
@@ -13,5 +13,5 @@ public interface PageParam {
 
   Integer getCurrent();
 
-  Sort getSort();
+  SortParam getSort();
 }
