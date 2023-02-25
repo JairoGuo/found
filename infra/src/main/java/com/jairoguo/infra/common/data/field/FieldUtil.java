@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * 用来处理字段的工具类 <br>
  * 1. 通过方法引用获取字段 2. 通过数据模型的映射关系获取字段
  *
- * @author Guo Jinru
+ * @author jairoguo
  */
 @Slf4j
 public class FieldUtil {
@@ -41,13 +41,13 @@ public class FieldUtil {
   /**
    * 获取lambda方法引用的实现类
    *
-   * @param columnFunc 方法引用
+   * @param fieldFunction 方法引用
    * @return Class<?>
    */
-  public static <T, R> Class<?> getFieldClass(FieldFunction<T, R> columnFunc) {
+  public static <T, R> Class<?> getFieldClass(FieldFunction<T, R> fieldFunction) {
 
     try {
-      SerializedLambda serializedLambda = getSerializedLambda(columnFunc);
+      SerializedLambda serializedLambda = getSerializedLambda(fieldFunction);
       String implClass = serializedLambda.getImplClass();
       String declaredClass = implClass.replace("/", ".");
       return Class.forName(declaredClass, false, ClassUtils.getDefaultClassLoader());
@@ -59,17 +59,17 @@ public class FieldUtil {
   /**
    * 获取SerializedLambda
    *
-   * @param columnFunc 方法引用
+   * @param fieldFunction 方法引用
    * @return SerializedLambda
    */
-  public static <T, R> SerializedLambda getSerializedLambda(FieldFunction<T, R> columnFunc) {
-    Class<?> columnFuncClass = columnFunc.getClass();
+  @SuppressWarnings("all")
+  public static <T, R> SerializedLambda getSerializedLambda(FieldFunction<T, R> fieldFunction) {
+    Class<?> fieldClass = fieldFunction.getClass();
 
     try {
-      Method writeReplace = columnFuncClass.getDeclaredMethod("writeReplace");
+      Method writeReplace = fieldClass.getDeclaredMethod("writeReplace");
       writeReplace.setAccessible(true);
-
-      Object invoke = writeReplace.invoke(columnFunc);
+      Object invoke = writeReplace.invoke(fieldFunction);
       return (SerializedLambda) invoke;
 
     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
