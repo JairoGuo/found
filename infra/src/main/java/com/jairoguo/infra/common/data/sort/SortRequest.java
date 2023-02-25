@@ -20,7 +20,7 @@ public class SortRequest {
    * @param column 字段名
    * @return Sort
    */
-  public static Sort by(SortDirectionEnum direction, String column) {
+  public static SortParam by(SortDirectionEnum direction, String column) {
     Order order = new SortOrder(direction, column);
     List<Order> orders = Collections.singletonList(order);
     SortBody sort = new SortBody(orders);
@@ -35,7 +35,7 @@ public class SortRequest {
    * @param field 方法引用
    * @return Sort
    */
-  public static <T, R> Sort by(SortDirectionEnum direction, FieldFunction<T, R> field) {
+  public static <T, R> SortParam by(SortDirectionEnum direction, FieldFunction<T, R> field) {
     String fieldString = FieldUtil.getField(field);
     return by(direction, fieldString);
   }
@@ -47,7 +47,7 @@ public class SortRequest {
    * @param fields 字段名数组
    * @return Sort
    */
-  public static Sort by(SortDirectionEnum direction, String... fields) {
+  public static SortParam by(SortDirectionEnum direction, String... fields) {
     HashMap<String, SortDirectionEnum> orderMaps = new HashMap<>();
     // 通过字段数组返回排序参数列表
     List<Order> orderList =
@@ -71,7 +71,7 @@ public class SortRequest {
    * @return Sort
    */
   @SafeVarargs
-  public static <T, R> Sort by(SortDirectionEnum direction, FieldFunction<T, R>... columns) {
+  public static <T, R> SortParam by(SortDirectionEnum direction, FieldFunction<T, R>... columns) {
     String[] columnArray = Arrays.stream(columns).map(FieldUtil::getField).toArray(String[]::new);
     return by(direction, columnArray);
   }
@@ -82,7 +82,7 @@ public class SortRequest {
    * @param orders 排序参数列表
    * @return Sort
    */
-  public static Sort by(List<Order> orders) {
+  public static SortParam by(List<Order> orders) {
     SortBody sort = new SortBody(orders);
     Map<String, SortDirectionEnum> orderMaps =
         orders.stream().collect(Collectors.toMap(Order::field, Order::direction, (k1, k2) -> k2));
@@ -96,7 +96,7 @@ public class SortRequest {
    * @param order 排序参数对象
    * @return Sort
    */
-  public static Sort by(Order order) {
+  public static SortParam by(Order order) {
 
     return by(order.direction(), order.field());
   }
@@ -107,7 +107,7 @@ public class SortRequest {
    * @param orders 排序参数对象数组
    * @return Sort
    */
-  public static Sort by(Order... orders) {
+  public static SortParam by(Order... orders) {
     if (orders.length == 0) {
       return new SortBody();
     }

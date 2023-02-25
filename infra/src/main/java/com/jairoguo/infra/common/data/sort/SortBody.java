@@ -39,7 +39,7 @@ public class SortBody extends BaseSort {
   }
 
   @Override
-  public Sort cloneSort() {
+  public SortParam cloneSort() {
     return new SortBody(orders, builder);
   }
 }

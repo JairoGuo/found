@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author jairoguo
  */
-public interface Sort {
+public interface SortParam {
 
   /**
    * 获取通用排序参数列表
@@ -19,7 +19,7 @@ public interface Sort {
   List<Order> orderList();
 
   /** 克隆排序对象 */
-  Sort cloneSort();
+  SortParam cloneSort();
 
   /**
    * 更新字段排序方式

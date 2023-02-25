@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author jairoguo
  */
-public abstract class BaseSort implements Sort {
+public abstract class BaseSort implements SortParam {
 
   protected List<Order> orders;
 
