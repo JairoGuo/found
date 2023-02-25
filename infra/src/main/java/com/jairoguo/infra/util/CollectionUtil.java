@@ -2,6 +2,7 @@ package com.jairoguo.infra.util;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -28,6 +29,26 @@ public class CollectionUtil {
    */
   public static boolean nonEmpty(Collection<?> collection) {
     return collection != null && !collection.isEmpty();
+  }
+
+  /**
+   * Map为空
+   *
+   * @param map Map
+   * @return map为空返回true; map不为空返回false;
+   */
+  public static boolean isEmpty(Map<?, ?> map) {
+    return map == null || map.isEmpty();
+  }
+
+  /**
+   * Map不为空
+   *
+   * @param map Map
+   * @return map不为空返回true; map为空返回false;
+   */
+  public static boolean nonEmpty(Map<?, ?> map) {
+    return map != null && !map.isEmpty();
   }
 
   /**
