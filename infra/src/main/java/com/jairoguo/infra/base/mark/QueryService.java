@@ -5,5 +5,4 @@ package com.jairoguo.infra.base.mark;
  *
  * @author jairoguo
  */
-public interface QueryService extends ApplicationService{
-}
+public interface QueryService extends ApplicationService {}
