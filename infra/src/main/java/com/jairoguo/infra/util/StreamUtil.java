@@ -43,16 +43,17 @@ public class StreamUtil {
     return toList(collection, function, false);
   }
 
-  public static <E, T> List<T> toList(Collection<E> collection, Function<E, T> function, Predicate<? super E> filter) {
+  public static <E, T> List<T> toList(
+      Collection<E> collection, Function<E, T> function, Predicate<? super E> filter) {
     if (CollectionUtil.isEmpty(collection)) {
       return new ArrayList<>();
     }
     return of(collection, false)
-            .filter(Objects::nonNull)
-            .filter(filter)
-            .map(function)
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+        .filter(Objects::nonNull)
+        .filter(filter)
+        .map(function)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
   }
 
   public static <E, T> List<T> toList(
@@ -149,6 +150,10 @@ public class StreamUtil {
       return new HashMap<>(0);
     }
     return of(collection, isParallel).collect(Collectors.groupingBy(key, downstream));
+  }
+
+  public static <E> DoubleStream mapToDouble(Collection<E> collection, Function<E, Long> key) {
+    return map(collection, key).filter(Objects::nonNull).mapToDouble(Long::longValue);
   }
 
   public static <E> LongStream mapToLong(Collection<E> collection, Function<E, Long> key) {
@@ -252,6 +257,7 @@ public class StreamUtil {
 
     return new ArrayList<>();
   }
+
   @SafeVarargs
   public static <E> List<E> concat(Collection<E>... collection) {
     if (collection.length == 0) {
@@ -267,6 +273,23 @@ public class StreamUtil {
   @SafeVarargs
   public static <E> List<E> distinctConcat(Collection<E>... collection) {
     return distinctList(concat(collection), Function.identity());
+  }
+
+  @SafeVarargs
+  public static <E extends Comparable<? super E>> E max(E... values) {
+    return Stream.of(values).filter(Objects::nonNull).max(Comparator.naturalOrder()).orElse(null);
+  }
+
+  @SafeVarargs
+  public static <E extends Comparable<? super E>> E min(E... values) {
+    return Stream.of(values).filter(Objects::nonNull).min(Comparator.naturalOrder()).orElse(null);
+  }
+
+  public static <E extends Comparable<? super E>> List<E> sort(Collection<E> collection) {
+    return of(collection, false)
+        .filter(Objects::nonNull)
+        .sorted(Comparator.naturalOrder())
+        .collect(Collectors.toList());
   }
 
   public static <E> Stream<E> nonNullStream(Collection<E> collection) {
