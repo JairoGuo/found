@@ -1,9 +1,10 @@
-package com.jairoguo.infra.handler.http;
+package com.jairoguo.core.web.handler.http;
 
 import com.jairoguo.infra.common.response.Result;
 import com.jairoguo.infra.common.response.ResultBody;
-import com.jairoguo.infra.handler.http.annotation.IgnoreResult;
+import com.jairoguo.infra.common.response.annotation.IgnoreResult;
 import com.jairoguo.infra.util.FeignUtil;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -13,9 +14,6 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
-import java.util.LinkedHashMap;
-import java.util.Objects;
 
 /**
  * @author jairoguo

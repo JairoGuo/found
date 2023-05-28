@@ -1,4 +1,4 @@
-package com.jairoguo.infra.handler.rpc;
+package com.jairoguo.core.web.handler.rpc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jairoguo.infra.common.response.CommonResultType;
@@ -7,10 +7,9 @@ import com.jairoguo.infra.exception.SystemException;
 import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
+import org.springframework.stereotype.Component;
 
 /** Feign异常处理 */
 @Component

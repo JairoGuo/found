@@ -1,7 +1,6 @@
-package com.jairoguo.infra.handler.exception;
+package com.jairoguo.core.web.handler.exception;
 
 import com.jairoguo.infra.common.response.CommonResultType;
-import com.jairoguo.infra.common.response.Result;
 import com.jairoguo.infra.common.response.ResultBody;
 import com.jairoguo.infra.exception.BaseException;
 import com.jairoguo.infra.exception.BusinessException;
