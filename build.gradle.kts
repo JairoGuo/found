@@ -40,17 +40,14 @@ allprojects {
 subprojects {
     apply {
         plugin("java")
+        plugin("java-library")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
     }
     dependencies {
         implementation(platform(deps.spring.cloud))
         implementation(platform(deps.spring.cloud.alibaba))
-        platform(deps.spring.boot)
-        testImplementation(deps.jupiter.api)
-        testRuntimeOnly(deps.jupiter.engine)
-        compileOnly("org.projectlombok:lombok")
-        annotationProcessor("org.projectlombok:lombok")
+//        implementation(platform(deps.spring.boot))
     }
 
     tasks.getByName<Test>("test") {
@@ -65,34 +62,89 @@ project(":infra") {
 
     }
     dependencies {
-        implementation("org.springframework:spring-web")
-        implementation("org.springframework:spring-context")
-        implementation("org.springframework:spring-webmvc")
-        implementation("org.springframework:spring-webmvc")
-        implementation("org.springframework.boot:spring-boot-autoconfigure")
-        implementation("org.apache.tomcat.embed:tomcat-embed-core")
-        implementation("io.github.openfeign:feign-core")
-        implementation("com.fasterxml.jackson.core:jackson-databind")
-        implementation(deps.bundles.log4j)
+
+//        api(deps.bundles.log4j)
+        api(deps.slf4j)
+        api(deps.bundles.junit)
+
 
     }
 
 }
 
 project(":apps") {
-    apply {
-        plugin("org.springframework.boot")
-        plugin("java-library")
 
-    }
 
     subprojects {
+        apply {
+            plugin("org.springframework.boot")
+            plugin("java-library")
+        }
+
         dependencies {
             implementation(project(":infra"))
+            implementation(project(":core:data-core"))
+            implementation(project(":core:web-core"))
+
             implementation("org.springframework.boot:spring-boot-starter-web")
-            implementation("org.springframework.boot:spring-boot-starter-test")
+            testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+            compileOnly("org.projectlombok:lombok")
+            annotationProcessor("org.projectlombok:lombok")
+
+            testImplementation(deps.jupiter.api)
+            testRuntimeOnly(deps.jupiter.engine)
         }
     }
 
+    project(":apps:app1") {
+
+        dependencies {
+            api("org.springframework.boot:spring-boot-starter-data-mongodb")
+
+        }
+    }
+
+}
+
+project(":core") {
+
+    subprojects {
+        apply {
+        }
+
+        dependencies {
+            implementation(project(":infra"))
+
+        }
+    }
+
+    project(":core:data-core") {
+        dependencies {
+            api("org.springframework.data:spring-data-mongodb")
+            api("org.springframework:spring-context")
+
+
+//            api(deps.mybatis.plus)
+
+
+        }
+    }
+
+    project(":core:web-core") {
+        dependencies {
+            implementation("org.springframework:spring-webmvc")
+            implementation("org.springframework:spring-web")
+
+            implementation("org.apache.tomcat.embed:tomcat-embed-core")
+            implementation("io.github.openfeign:feign-core")
+            implementation("com.fasterxml.jackson.core:jackson-databind")
+
+
+//            api(deps.mybatis.plus)
+
+
+        }
+    }
 }
 
