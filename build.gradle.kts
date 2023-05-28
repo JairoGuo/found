@@ -135,6 +135,7 @@ project(":core") {
         dependencies {
             implementation("org.springframework:spring-webmvc")
             implementation("org.springframework:spring-web")
+            implementation("org.aspectj:aspectjrt")
 
             implementation("org.apache.tomcat.embed:tomcat-embed-core")
             implementation("io.github.openfeign:feign-core")
