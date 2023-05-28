@@ -41,37 +41,37 @@ public class QueryWrapper<T> implements QueryBuilder<T> {
 
   @Override
   public <R> QueryBuilder<T> gt(FieldFunction<T, R> field, R value) {
-    ValueUtil.setIfPresent(value, v -> queryCondition.gtParamsAdd(field, v));
+    ValueUtil.acceptIfPresent(value, v -> queryCondition.gtParamsAdd(field, v));
     return this;
   }
 
   @Override
   public <R> QueryBuilder<T> lt(FieldFunction<T, R> field, R value) {
-    ValueUtil.setIfPresent(value, v -> queryCondition.ltParamsAdd(field, v));
+    ValueUtil.acceptIfPresent(value, v -> queryCondition.ltParamsAdd(field, v));
     return this;
   }
 
   @Override
   public <R> QueryBuilder<T> gte(FieldFunction<T, R> field, R value) {
-    ValueUtil.setIfPresent(value, v -> queryCondition.gteParamsAdd(field, v));
+    ValueUtil.acceptIfPresent(value, v -> queryCondition.gteParamsAdd(field, v));
     return this;
   }
 
   @Override
   public <R> QueryBuilder<T> lte(FieldFunction<T, R> field, R value) {
-    ValueUtil.setIfPresent(value, v -> queryCondition.lteParamsAdd(field, v));
+    ValueUtil.acceptIfPresent(value, v -> queryCondition.lteParamsAdd(field, v));
     return this;
   }
 
   @Override
   public <R> QueryBuilder<T> in(FieldFunction<T, R> field, Collection<R> value) {
-    ValueUtil.setIfPresent(value, v -> queryCondition.inParamsAdd(field, v));
+    ValueUtil.acceptIfPresent(value, v -> queryCondition.inParamsAdd(field, v));
     return this;
   }
 
   @Override
   public <R> QueryBuilder<T> like(FieldFunction<T, R> field, String value, LikeModeType mode) {
-    ValueUtil.setIfPresent(value, v -> queryCondition.likeParamsAdd(field, mode.getRegex(v)));
+    ValueUtil.acceptIfPresent(value, v -> queryCondition.likeParamsAdd(field, mode.getRegex(v)));
     return this;
   }
 
