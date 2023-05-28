@@ -2,9 +2,7 @@ package com.jairoguo.infra.common.data.field;
 
 import com.jairoguo.infra.base.mark.PO;
 import com.jairoguo.infra.exception.FieldException;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.ClassUtils;
-
+import com.jairoguo.infra.util.ClassUtils;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -15,6 +13,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 用来处理字段的工具类 <br>
@@ -22,8 +22,9 @@ import java.util.stream.Collectors;
  *
  * @author jairoguo
  */
-@Slf4j
 public class FieldUtil {
+
+  static Logger log = LoggerFactory.getLogger(FieldUtil.class);
 
   /**
    * 根据lambda方法引用转换为字段名
