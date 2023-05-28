@@ -1,4 +1,4 @@
-package com.jairoguo.infra.handler.http.annotation;
+package com.jairoguo.infra.common.response.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
