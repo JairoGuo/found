@@ -1,10 +1,9 @@
 package com.jairoguo.infra.util;
 
-import java.util.Collection;
-import java.util.List;
+import java.lang.reflect.Modifier;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.function.Predicate;
 
 /**
  * 设置属性值工具
@@ -16,18 +15,13 @@ import java.util.function.Supplier;
 public class ValueUtil {
 
   private static <T> T setValue(T target, T fromValue) {
+    if (Modifier.isFinal(target.getClass().getModifiers())) {
+      return target;
+    }
     if (Objects.nonNull(fromValue) && target.getClass().equals(fromValue.getClass())) {
       target = fromValue;
     }
     return target;
-  }
-
-  public static <T> void setIfPresent(T fromValue, T target) {
-    setValue(target, fromValue);
-  }
-
-  public static void setIfPresent(String fromValue, String target) {
-    setValue(target, fromValue);
   }
 
   public static void setIfPresent(Integer fromValue, Integer target) {
@@ -46,24 +40,24 @@ public class ValueUtil {
     setValue(target, fromValue);
   }
 
-  public static <T> void setIfPresent(T fromValue, Consumer<T> target) {
+  public static <T> void acceptIfPresent(T fromValue, Consumer<T> target) {
     if (Objects.nonNull(fromValue)) {
       target.accept(fromValue);
     }
   }
 
-  public static <T> void setIfPresent(Collection<T> fromValue, Consumer<Collection<T>> target) {
-    if (CollectionUtil.nonEmpty(fromValue)) {
-      target.accept(fromValue);
-    }
-  }
-
-  public static <T> void handleIfPredicate(boolean predicate, T fromValue, Consumer<T> target) {
+  public static <T> void acceptIfPredicate(T fromValue, boolean predicate, Consumer<T> target) {
     if (predicate) {
       target.accept(fromValue);
     }
   }
 
-  private ValueUtil() {}
+  public static <T> void acceptIfPredicate(
+      T fromValue, Predicate<T> predicate, Consumer<T> target) {
+    if (predicate.test(fromValue)) {
+      target.accept(fromValue);
+    }
+  }
 
+  private ValueUtil() {}
 }
