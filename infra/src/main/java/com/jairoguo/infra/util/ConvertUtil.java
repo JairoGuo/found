@@ -10,10 +10,15 @@ import java.util.function.Supplier;
  */
 public class ConvertUtil {
   public static <T, R> List<R> list(List<T> list, Function<T, R> to) {
+    return list(list, to, false);
+  }
+
+  public static <T, R> List<R> list(List<T> list, Function<T, R> to, boolean isParallel) {
     if (list == null || list.isEmpty()) {
       return Collections.emptyList();
     }
-    return list.stream().map(item -> to(item, to)).toList();
+
+    return StreamUtil.toList(list, item -> to(item, to), isParallel);
   }
 
   public static <T, R> List<R> list(List<T> list, Supplier<R> to) {
