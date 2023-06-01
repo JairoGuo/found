@@ -1,6 +1,6 @@
 package com.jairoguo.infra.util;
 
-import com.jairoguo.infra.common.lock.Lock;
+import com.jairoguo.infra.concurrent.lock.Lock;
 import java.util.function.Supplier;
 
 /**

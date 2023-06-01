@@ -1,4 +1,4 @@
-package com.jairoguo.infra.common.lock;
+package com.jairoguo.infra.concurrent.lock;
 
 import java.util.concurrent.TimeUnit;
 
