@@ -1,5 +1,6 @@
 package com.jairoguo.infra.util;
 
+import java.text.NumberFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -11,10 +12,12 @@ import java.util.concurrent.TimeUnit;
  * @since 2023/3/20
  */
 public class TakeUpTimerUtil {
-  private static String lastMark = "start";
+  private static String lastMark = "▶︎";
   private static long lastTime = System.nanoTime();
   private static final Map<String, Long> timeMap = new LinkedHashMap<>();
   private static final Map<String, Long> timeHappenCount = new LinkedHashMap<>();
+
+  private static final NumberFormat instance = NumberFormat.getInstance();
 
   public static void set(int mark) {
     set("" + mark);
@@ -22,7 +25,7 @@ public class TakeUpTimerUtil {
 
   public static void set(String mark) {
     long thisTime = System.nanoTime();
-    String key = lastMark + "->" + mark;
+    String key = lastMark + " -> " + mark;
     Long lastSummary = timeMap.get(key);
     if (lastSummary == null) lastSummary = 0L;
 
@@ -35,7 +38,7 @@ public class TakeUpTimerUtil {
     lastMark = mark;
   }
 
-  static final String FORMAT = "%20s, Total times:%20s,  Repeat times:%20s, Avg times:%20s %n";
+  static final String FORMAT = "%30s, [总计耗时]:%20s,  [重复次数]:%20s, [平均耗时]:%20s %n";
 
   public static void print() {
     print(TimeUnit.NANOSECONDS);
@@ -47,10 +50,12 @@ public class TakeUpTimerUtil {
       switch (timeUnit) {
         case SECONDS -> printFormat(
             entry.getKey(),
-            TimeConversionUtil.nanosecondsToSeconds(entry.getValue()),
-            TimeConversionUtil.nanosecondsToSeconds(timeHappenCount.get(entry.getKey())),
-            TimeConversionUtil.nanosecondsToSeconds(
-                entry.getValue() / timeHappenCount.get(entry.getKey())));
+            instance.format(TimeConversionUtil.nanosecondsToSeconds(entry.getValue())),
+            instance.format(
+                TimeConversionUtil.nanosecondsToSeconds(timeHappenCount.get(entry.getKey()))),
+            instance.format(
+                TimeConversionUtil.nanosecondsToSeconds(
+                    entry.getValue() / timeHappenCount.get(entry.getKey()))));
         case MILLISECONDS -> printFormat(
             entry.getKey(),
             TimeConversionUtil.nanosecondsToMilliseconds(entry.getValue()),
