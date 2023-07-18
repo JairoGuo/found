@@ -3,7 +3,8 @@ package com.jairoguo.infra.concurrent.lock;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 用于实现方法引用传参接口
+ * 锁功能接口
+ *
  *
  * @author Jairo
  */
@@ -11,8 +12,16 @@ public interface Lock {
 
   long EXPIRE_TIME = 60;
 
+  /**
+   * 阻塞加锁
+   */
   void lock();
 
+
+  /**
+   * 通过名称阻塞加锁
+   * @param lockName
+   */
   void lock(String lockName);
 
   default boolean tryLock(String lockName) {
@@ -31,6 +40,9 @@ public interface Lock {
     return tryLock(lockName, waitTime, EXPIRE_TIME, timeUnit);
   }
 
+  /**
+   * 非阻塞加锁
+   */
   boolean tryLock(String lockName, long waitTime, long expireTime, TimeUnit unit);
 
   void unlock();
