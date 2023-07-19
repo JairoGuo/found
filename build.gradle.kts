@@ -85,6 +85,7 @@ project(":apps") {
             implementation(project(":infra"))
             implementation(project(":core:data-core"))
             implementation(project(":core:web-core"))
+            implementation(project(":core:concurrent-core"))
 
             implementation("org.springframework.boot:spring-boot-starter-web")
             testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -122,6 +123,7 @@ project(":core") {
     project(":core:data-core") {
         dependencies {
             api("org.springframework.data:spring-data-mongodb")
+            api("org.springframework.data:spring-data-redis")
             api("org.springframework:spring-context")
 
 
@@ -135,15 +137,22 @@ project(":core") {
         dependencies {
             implementation("org.springframework:spring-webmvc")
             implementation("org.springframework:spring-web")
+            implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+            implementation("org.springframework.boot:spring-boot-autoconfigure")
             implementation("org.aspectj:aspectjrt")
 
             implementation("org.apache.tomcat.embed:tomcat-embed-core")
             implementation("io.github.openfeign:feign-core")
             implementation("com.fasterxml.jackson.core:jackson-databind")
 
+        }
+    }
 
-//            api(deps.mybatis.plus)
-
+    project(":core:concurrent-core") {
+        dependencies {
+            api("org.springframework.data:spring-data-redis")
+            api("org.springframework:spring-context")
+            api(deps.redisson)
 
         }
     }

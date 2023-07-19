@@ -14,6 +14,7 @@ dependencyResolutionManagement {
             version("log4j", "2.19.0")
             version("slf4j", "2.0.6")
             version("mybatis-plus", "3.5.3.1")
+            version("redisson", "3.23.0")
 
             // ===============================================依赖=======================================================
 
@@ -31,6 +32,7 @@ dependencyResolutionManagement {
             library("log4j-slf4j2-impl", "org.apache.logging.log4j", "log4j-slf4j2-impl").versionRef("log4j")
             library("mybatis-plus", "com.baomidou", "mybatis-plus-boot-starter").versionRef("mybatis-plus")
             library("slf4j", "org.slf4j", "slf4j-api").versionRef("slf4j")
+            library("redisson", "org.redisson", "redisson").versionRef("redisson")
             // ===============================================bundle====================================================
             bundle("log4j", listOf("log4j-core", "log4j-slf4j2-impl"))
             bundle("junit", listOf("jupiter-api", "jupiter-engine"))
@@ -51,3 +53,5 @@ include("core:data-core")
 findProject(":core:data-core")?.name = "data-core"
 include("core:web-core")
 findProject(":core:web-core")?.name = "web-core"
+include("core:concurrent-core")
+findProject(":core:concurrent-core")?.name = "concurrent-core"
