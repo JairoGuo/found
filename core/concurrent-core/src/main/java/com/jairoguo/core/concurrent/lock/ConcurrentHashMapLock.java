@@ -1,4 +1,4 @@
-package com.jairoguo.infra.concurrent.lock.impl;
+package com.jairoguo.core.concurrent.lock;
 
 import com.jairoguo.infra.concurrent.lock.BaseLock;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,9 +17,7 @@ public class ConcurrentHashMapLock extends BaseLock {
   @Override
   protected boolean acquire(String lockName, long waitTime, long expireTime, TimeUnit unit) {
     synchronized (ConcurrentHashMapLock.class) {
-      if (tryAcquire(lockName, waitTime, expireTime, unit)) {
-        return true;
-      } else {
+      if (!tryAcquire(lockName, waitTime, expireTime, unit)) {
         while (!acquire(lockName, waitTime, expireTime, unit)) {
           try {
             unit.sleep(waitTime);
@@ -28,16 +26,16 @@ public class ConcurrentHashMapLock extends BaseLock {
             return false;
           }
         }
-        return true;
       }
+      return true;
     }
   }
 
   @Override
   protected boolean tryAcquire(String lockName, long waitTime, long expireTime, TimeUnit unit) {
     synchronized (ConcurrentHashMapLock.class) {
+      String lockMark = getLockMark();
       if (lockMap.containsKey(lockName)) {
-        String lockMark = getLockMark();
         String lockedMark = lockMap.get(lockName);
         // 当天线程标记与map线程标记相同为同一把锁
         if (lockMark.equals(lockedMark)) {
@@ -47,7 +45,6 @@ public class ConcurrentHashMapLock extends BaseLock {
         }
         return false;
       } else {
-        String lockMark = getLockMark();
         lockMap.put(lockName, lockMark);
         threadMarkMap.putIfAbsent(lockMark, 1);
         threadMark.set(lockMark);
